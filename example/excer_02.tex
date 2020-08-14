@@ -1,0 +1,133 @@
+ \usepackage{listings}
+\input{preamble}
+
+\lstset{%
+    % Basic design
+    basicstyle={\ttfamily},   
+    % Line numbers
+    xleftmargin={0.75cm},
+    numbers=none,
+    stepnumber=1,
+    firstnumber=1,
+    numberfirstline=true,
+    % Code design   
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{darkgray}\ttfamily,
+    ndkeywordstyle=\color{green}\bfseries,
+    stringstyle=\color{orange},
+    % Code
+    language=html,
+    alsodigit={.:;},
+    tabsize=2,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    extendedchars=true,
+    breaklines=true,        
+    % Support for German umlauts
+    literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\o}}1   
+    {æ}{{\oe}}1
+    {ø}{{\O}}1
+    {å}{{\aa}}1
+    {Æ}{{\OE}}1
+    {Ø}{{\O}}1
+    {Å}{{\AA}}1
+  }
+
+
+\setup{2}
+
+\begin{document}
+\maketitle
+
+\aufgabe{Kryds det rigtige svar af}{0}{1}
+\begin{itemize}
+\item Hvilket HTML tag bruges når noget er meget vigtigt?
+\begin{answerspot}
+  \begin{multchoice}
+    \choice{\lstinline{<em>}}
+    \cchoice{\lstinline{<strong>}}
+    \choice{\lstinline{<it>}}
+      
+  \end{multchoice}
+\end{answerspot}
+
+\item Hvilket tag bruges til at markere navigationsdelen af en side?  
+  \begin{answerspot}
+    \begin{multchoice}
+      \cchoice{\lstinline{<nav>}}
+      \choice{\lstinline{<div id="navigation">}}
+      \choice{\lstinline{<navigation>}}
+    \end{multchoice}
+  \end{answerspot}
+\item Hvor mange header-niveauer er der i HTML?
+    \begin{answerspot}
+    \begin{multchoice}
+      \choice{3}
+      \choice{10}
+      \choice{5}
+      \cchoice{6}
+      \choice{Så mange der er brug for }
+      
+    \end{multchoice}
+  \end{answerspot}
+  
+\item Vælg de tags der er inline tags
+    \begin{answerspot}
+    \begin{multchoice}
+      \cchoice{\lstinline{<strong>}}
+      \choice{\lstinline{<nav>}}
+      \cchoice{\lstinline{<a>}}
+      \choice{\lstinline{<p>}}
+      \choice{\lstinline{<div>}}
+      \cchoice{\lstinline{<em>}}
+    \end{multchoice}
+  \end{answerspot}
+\end{itemize}
+
+\aufgabe{}{0}{1}
+HTML-koden \lstinline{<b> fed </b>}  markerer at 'fed' skal skrives
+med \textbf{fed} skrift. Hvorfor - tror du -  anbefales det kun at
+bruge \lstinline{<b>}, når der ikke er andre muligheder (eksempelvis \lstinline{<strong>})?
+
+\begin{answerspot}
+  \makeTextField[3cm]
+\end{answerspot}
+
+
+\aufgabe{}{0}{1}
+Lav en webside med en ordnet liste, der oplister sommermånederne. 
+\begin{answerspot}
+  \makeTextField[10cm]
+\end{answerspot}
+\begin{loesung}
+  \begin{lstlisting}
+<!DOCTYPE html>
+ <html>
+  <head>
+  </head>
+  <body>
+   <ol>
+    <li> Juni </li>
+     <li> Juli </li>
+     <li> August </li>
+   </ol>
+ </body>
+</html>
+
+  \end{lstlisting}
+\end{loesung}
+
+
+
+
+\end{document}
+
+
