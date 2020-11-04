@@ -11,6 +11,17 @@
 \newif\ifinteractive
 \newif\iflogo
 
+\newcount\@punktcount
+
+% this command gets written in the aux file:
+\def\lastcountervalue#1#2{\expandafter\xdef\csname #1\endcsname{#2}}
+% this is the user command to save the last value:
+\AtEndDocument{\write\@auxout{\string\lastcountervalue{points}{\the\@punktcount}}}
+% this is the user command to retrieve the last value:
+\def\getlastpoints{%
+  \@ifundefined{points}%
+  {??}{\@nameuse{points}}%
+}
 
 \gdef\@kurs{}
 \def\kurs#1{\gdef\@kurs{#1}}
@@ -164,10 +175,7 @@
 \fi
 \node[anchor=south west,color=white] at ($(current page.south west)+(0.05,0.05)$) {\scriptsize\sffamily\@semester};
 %\node[anchor=south east,fill=usecol,minimum width=0.9cm,minimum height=0.3cm] at ($(current page.south east)+(0,4)$)  {};
-\ifx\@punkteSumme\empty\else
-	\node[anchor=north east] at ($(current page.south east)+(-0.5,4.75)$) {\sffamily{\fontsize{10}{10}\selectfont{\color{usecol}\sffamily$\Sigma$}}};
-	\node[anchor=north east,color=white,fill=usecol,draw=usecol,minimum width=0.5cm,minimum height=0.5cm,text=white,rounded corners=3pt] at ($(current page.south east)+(0.1,4.75)$) {\sffamily{\fontsize{10}{10}\selectfont{\sffamily\@punkteSumme}}};
-\fi
+
 \iflogo\node[anchor=north] at ($(current page.north east)+(-2.55,-1.26)$) {\includegraphics[trim=0 0 0 60,clip,width=4.5cm]{AAU_LOGO_RGB}};
  \node[anchor=north] at ($(current page.north east)+(-2.55,-0)$) {\includegraphics[trim=0 20 0 0,clip,width=3cm]{AAU_LOGO_WHITE.png}};\else\empty\fi
  
@@ -244,7 +252,8 @@
     \addcontentsline{toc}{section}{\@textAufgabe \arabic{section}}%
     \raggedsection\normalfont\nobreak{\normalfont{\normalfont\textbf{\color{headcol}\sffamily\large
     {\tiny\hspace*{0.35cm} \color{headcol}\raisebox{2.6ex}{\difficulty{#3}}}\hspace*{-1.05cm}\@textAufgabe			
-     ~ \arabic{section}}}\enskip #1}\hfill\ifnum\pdfstrcmp{#2}{0}=0\empty\else\large#2 \ifnum\pdfstrcmp{#2}{1}=0\@textPunkt\else\@textPunkte\fi\fi\par\nobreak}\nobreak%
+    ~ \arabic{section}}}\enskip #1}\hfill\ifnum\pdfstrcmp{#2}{0}=0\empty\else\large#2 \ifnum\pdfstrcmp{#2}{1}=0\@textPunkt\else\@textPunkte\fi\fi\par\nobreak}\nobreak%
+  \global\advance\@punktcount\numexpr(#2)%
   \@afterheading\par
 }
 
@@ -462,9 +471,17 @@
 
 
 \makeatletter
+\def\@makeSum{
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east] at ($(current page.south east)+(-0.5,4.75)$) {\sffamily{\fontsize{10}{10}\selectfont{\color{usecol}\sffamily$\Sigma$}}};
+    \node[anchor=north east,color=white,fill=usecol,draw=usecol,minimum width=0.5cm,minimum height=0.5cm,text=white,rounded corners=3pt] at ($(current page.south east)+(0.1,4.75)$) {\sffamily{\fontsize{10}{10}\selectfont{\sffamily\getlastpoints}}};
+  \end{tikzpicture}
+}
+
 \def\@makeTextFieldInter#1{\vspace{15pt}\par \ifhidesolution\TextField[width=\textwidth,height=#1,multiline=true]{}\else\empty\fi}
 \def\@makeTextFieldStd#1{\vspace{15pt}\par \ifhidesolution\framebox{\rule{0pt}{#1}\rule{\textwidth}{0pt}} \else\empty\fi}
 \newcommand{\makeTextField}[1][3cm]{\ifinteractive\@makeTextFieldInter{#1}\else\@makeTextFieldStd{#1}\fi}
+\newcommand{\makeSum}{\@makeSum}
 \makeatother
 \endinput
 
